@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.helloworld.mapper.ComUserMapper">
+
+    <select id="getAllInfo" resultType="com.example.helloworld.domin.ComUser">
+        SELECT * FROM com_user
+    </select>
+
+    <insert id="Insert" >
+        insert into com_user value('12',#{uid},'ee',#{uname},'1102850000','732965E9EDEB1791','19','正常','44','实习生')
+    </insert>
+
+    <update id="Update">
+        update com_user
+            set username='王丁丁'
+            where id = #{id}
+    </update>
+
+    <delete id="Del" >
+        delete from com_user where id = #{id}
+    </delete>
+</mapper>
