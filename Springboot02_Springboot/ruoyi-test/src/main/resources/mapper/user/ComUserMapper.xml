@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.test.mapper.ComUserMapper">
+    
+    <resultMap type="ComUser" id="ComUserResult">
+        <result property="id"    column="Id"    />
+        <result property="userid"    column="UserId"    />
+        <result property="logincount"    column="logincount"    />
+        <result property="username"    column="username"    />
+        <result property="orgid"    column="orgid"    />
+        <result property="password"    column="password"    />
+        <result property="usertype"    column="usertype"    />
+        <result property="status"    column="status"    />
+        <result property="gongsibianhao"    column="gongsibianhao"    />
+        <result property="orgname"    column="orgname"    />
+    </resultMap>
+
+    <sql id="selectComUserVo">
+        select Id, UserId, logincount, username, orgid, password, usertype, status, gongsibianhao, orgname from com_user
+    </sql>
+
+    <select id="selectComUserList" parameterType="ComUser" resultMap="ComUserResult">
+        <include refid="selectComUserVo"/>
+        <where>  
+            <if test="userid != null  and userid != ''"> and UserId = #{userid}</if>
+            <if test="logincount != null  and logincount != ''"> and logincount = #{logincount}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="orgid != null  and orgid != ''"> and orgid = #{orgid}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="usertype != null  and usertype != ''"> and usertype = #{usertype}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="gongsibianhao != null  and gongsibianhao != ''"> and gongsibianhao = #{gongsibianhao}</if>
+            <if test="orgname != null  and orgname != ''"> and orgname like concat('%', #{orgname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectComUserById" parameterType="Long" resultMap="ComUserResult">
+        <include refid="selectComUserVo"/>
+        where Id = #{id}
+    </select>
+        
+    <insert id="insertComUser" parameterType="ComUser" useGeneratedKeys="true" keyProperty="id">
+        insert into com_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != ''">UserId,</if>
+            <if test="logincount != null">logincount,</if>
+            <if test="username != null">username,</if>
+            <if test="orgid != null">orgid,</if>
+            <if test="password != null">password,</if>
+            <if test="usertype != null">usertype,</if>
+            <if test="status != null">status,</if>
+            <if test="gongsibianhao != null">gongsibianhao,</if>
+            <if test="orgname != null">orgname,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="logincount != null">#{logincount},</if>
+            <if test="username != null">#{username},</if>
+            <if test="orgid != null">#{orgid},</if>
+            <if test="password != null">#{password},</if>
+            <if test="usertype != null">#{usertype},</if>
+            <if test="status != null">#{status},</if>
+            <if test="gongsibianhao != null">#{gongsibianhao},</if>
+            <if test="orgname != null">#{orgname},</if>
+         </trim>
+    </insert>
+
+    <update id="updateComUser" parameterType="ComUser">
+        update com_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null and userid != ''">UserId = #{userid},</if>
+            <if test="logincount != null">logincount = #{logincount},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="orgid != null">orgid = #{orgid},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="usertype != null">usertype = #{usertype},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="gongsibianhao != null">gongsibianhao = #{gongsibianhao},</if>
+            <if test="orgname != null">orgname = #{orgname},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteComUserById" parameterType="Long">
+        delete from com_user where Id = #{id}
+    </delete>
+
+    <delete id="deleteComUserByIds" parameterType="String">
+        delete from com_user where Id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
